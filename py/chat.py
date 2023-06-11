@@ -1,6 +1,6 @@
 import openai
 
-from py.mysql_history import insert_content_table
+from py.redis_cache import get_v, update_v
 from py.util import read_yaml
 
 
@@ -8,11 +8,6 @@ def get_name_by_question(question):
     str_len = len(question) if len(question) < 100 else 100
     name = str(question)[0:str_len]
     return name
-
-
-def get_num_by_role(role):
-    role_dict = {'system': 1, 'user': 2, 'assistant': 3}
-    return role_dict[role]
 
 
 def chat_stream(messages, sessionId):
@@ -42,10 +37,11 @@ def chat_stream(messages, sessionId):
         yield "data: %s\n\n" % data.replace("\n", "<br>")
     sentence_list.pop()
     sentence = ''.join(sentence_list).strip().replace("'", "\\'").replace("\"", "\\\"")
-
+    content_key = str(sessionId) + "_content"
     # 插入gpt回复的内容
-    insert_content_table(sessionId, str(get_num_by_role('assistant')), sentence)
-
-
-if __name__ == '__main__':
-    print(get_num_by_role('user'))
+    content_dict = {"sessionId": sessionId, "role": 'assistant', "content": sentence}
+    # 获取redis缓存的content并将此次提问加入缓存
+    content_arr = list(eval(get_v(content_key)))
+    content_arr.append(content_dict)
+    # 更新缓存
+    update_v(content_key, str(content_arr))

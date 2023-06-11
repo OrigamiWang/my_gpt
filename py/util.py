@@ -8,6 +8,11 @@ def get_session_id():
     return str(time.time()).replace('.', '')
 
 
+def get_num_by_role(role):
+    role_dict = {'system': 1, 'user': 2, 'assistant': 3}
+    return role_dict[role]
+
+
 def read_yaml(keys):
     try:
         key_list = str(keys).split('.')
