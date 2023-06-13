@@ -1,6 +1,6 @@
 import redis
 
-from py.mysql_history import get_content
+from py.mysql_history import get_content, query_history
 from py.util import read_yaml
 
 
@@ -11,9 +11,9 @@ def connect_redis():
 conn = connect_redis()
 
 
-def exists_key(sessionId):
+def exists_key(key):
     print(conn)
-    return conn.exists(sessionId)
+    return conn.exists(key)
 
 
 def set_kv(k, v):
@@ -31,10 +31,17 @@ def update_v(k, v):
 def flush_cache(sessionId):
     message_key = sessionId + "_message"
     content_key = sessionId + "_content"
+    content_num_key = sessionId + "_content_num"
     conn.delete(message_key)
     conn.delete(content_key)
+    conn.delete(content_num_key)
+
+
+def load_history_cache():
+    return get_v("history")
 
 
 if __name__ == '__main__':
-    print(conn.set('a', 'a'))
-    print(conn.exists('a'))
+    history_cache = get_v("history")
+    print(history_cache)
+    print(eval(history_cache))

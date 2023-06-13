@@ -46,13 +46,34 @@ def get_content(sessionId):
     return execute_sql(cursor, sql)
 
 
+def update_time(session_id):
+    sql = "UPDATE message m SET m.`time` = NOW() WHERE m.`session_id` = \'" + str(session_id) + "\'"
+    print(sql)
+    execute_sql(cursor, sql)
+    conn.commit()
+
+
 # 更新message和content
 def update_db():
     return None
 
 
+def query_history():
+    sql = "SELECT * FROM message m ORDER BY m.`time` DESC LIMIT 0, 7;"
+    return execute_sql(cursor, sql)
+
+
+def query_content_list(id):
+    sql = "SELECT * FROM content c WHERE c.`session_id` = (SELECT m.`session_id` FROM message m WHERE m.`id` = " + \
+          str(id) + ")"
+    return execute_sql(cursor, sql)
+
+
+def get_sessionId_by_msgId(id):
+    sql = "SELECT m.`session_id` FROM message m WHERE m.`id` = " + str(id)
+    return execute_sql(cursor, sql)
+
+
 if __name__ == '__main__':
-    sql = "insert into..."
-    sql_arr = ["(1,2,3),", "(4,5,6),", "(7,8,9),"]
-    sql += "".join(sql_arr)
-    print(sql[0:len(sql) - 1])
+    history_list = (query_history())
+    print(str(history_list))

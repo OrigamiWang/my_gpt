@@ -1,7 +1,8 @@
 import openai
 
-from py.redis_cache import get_v, update_v
-from py.util import read_yaml
+from py.mysql_history import query_history
+from py.redis_cache import get_v, update_v, load_history_cache, set_kv
+from py.util import read_yaml, process_history_datetime, tuple_to_list
 
 
 def get_name_by_question(question):
@@ -45,3 +46,7 @@ def chat_stream(messages, sessionId):
     content_arr.append(content_dict)
     # 更新缓存
     update_v(content_key, str(content_arr))
+
+
+def load_his():
+    return process_history_datetime(tuple_to_list(query_history()))

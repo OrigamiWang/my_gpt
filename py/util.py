@@ -13,6 +13,32 @@ def get_num_by_role(role):
     return role_dict[role]
 
 
+def get_role_by_num(num):
+    role_dict = {1: "system", 2: "user", 3: "assistant"}
+    return role_dict[num]
+
+
+def process_history_datetime(history_list):
+    for history in history_list:
+        history[2] = str(history[2])
+    return history_list
+
+
+def list_to_dict(content_list):
+    content_dict_list = []
+    for content in content_list:
+        content_dict_list.append(
+            {"sessionId": content[1], "role": get_role_by_num(content[2]), "content": content[3]})
+    return content_dict_list
+
+
+def tuple_to_list(tu):
+    li = []
+    for t in tu:
+        li.append(list(t))
+    return li
+
+
 def read_yaml(keys):
     try:
         key_list = str(keys).split('.')
@@ -29,4 +55,5 @@ def read_yaml(keys):
 
 
 if __name__ == '__main__':
-    print(read_yaml('database'))
+    arr = [1, 2, 3, 4]
+    idx = "2"

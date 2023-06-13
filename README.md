@@ -10,8 +10,9 @@
 2. 点击历史记录后，从mysql拿到那一次之前的所有消息并缓存在redis
 3. sendBeacon() 为了避免chrome在onBeforeUnload事件中禁用fetch
 4. mysql查询到的数据是tuple，redis不能用tuple、list，选用string，使用eval将string转化成list、tuple
-5. TODO: 点击历史对话 -> 将mysql的数据缓存到redis。**最后同步缓存的时候，只插入新增加的对话**
-6. 重构前端
+5. 重构前端
+6. 点击历史对话 -> 将mysql的数据缓存到redis。**最后同步缓存的时候，插入新增加的对话，并更新message的时间**
+
 
 ## css属性积累
 

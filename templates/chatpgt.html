@@ -3,17 +3,23 @@
 <head>
     <title>chatGPT API Stream Demo</title>
     <link rel="stylesheet" href="../static/gpt.css">
+    <link rel="stylesheet" href="../static/history.css">
 </head>
 
 <body>
-<div id="container" class="main">
-    <div id="chatInfo"></div>
-    <div id="chatOper">
-        <input id="chatText" type="text" placeholder="Input your question.."/>
-        <input id="submitBtn" type="button" value="Input" onclick="submit()" disabled/>
+<div id="container" class="left">
+    <div id="main" style="float: left">
+        <div id="chatInfo"></div>
+        <div id="chatOper">
+            <input id="chatText" type="text" placeholder="Input your question.."/>
+            <input id="submitBtn" type="button" value="Input" onclick="submit()" disabled/>
+        </div>
     </div>
+    <div id="history" class="right"></div>
 </div>
+
 </body>
 <script src="../static/script.js" type="application/javascript"></script>
+<script src="../static/history.js" type="application/javascript"></script>
 
 </html>

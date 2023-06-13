@@ -6,6 +6,7 @@ let session_id = null
 window.onload = () => {
     console.log("the page is loaded...")
     fetch_session_id()
+    load_history()
 }
 // 页面关闭时触发，将redis缓存中的数据持久化到mysql
 window.onbeforeunload = () => {
@@ -66,12 +67,8 @@ function setDivStyle(style) {
 
 function addQuestionDiv(text) {
     let question_div = document.createElement('div')
-    let style = question_div.style
+    question_div.setAttribute('class', 'conversation right')
     question_div.innerText = text
-    // 设置样式
-    setDivStyle(style)
-    style.float = "right"
-
     chatInfo.appendChild(question_div)
 }
 
@@ -83,16 +80,13 @@ function addClearDiv() {
 
 function addAnswerDiv() {
     let answer_div = document.createElement('div')
-    let style = answer_div.style
-    // 设置样式
-    setDivStyle(style)
-
+    answer_div.setAttribute('class', 'conversation')
     chatInfo.appendChild(answer_div)
     return answer_div
 }
 
-function appendAnswerText(question_div, text) {
-    question_div.innerHTML = question_div.innerHTML + text
+function appendAnswerText(answer_div, text) {
+    answer_div.innerHTML = answer_div.innerHTML + text
 }
 
 function submit() {
@@ -105,13 +99,13 @@ function submit() {
     addClearDiv()
     let url = "/gpt/" + session_id + "?question=" + question
     let source = new EventSource(url);
-    let question_div = addAnswerDiv()
+    let answerDiv = addAnswerDiv()
     source.onmessage = function (event) {
         if (event.data === "[DONE]") {
             recover_submit_style()
             source.close();
         } else {
-            appendAnswerText(question_div, event.data)
+            appendAnswerText(answerDiv, event.data)
             // chatInfo.innerText = chatInfo.innerText + event.data
         }
     }
