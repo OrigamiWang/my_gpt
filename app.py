@@ -1,13 +1,11 @@
 from flask import Flask, render_template, request, make_response, jsonify, Response
 import os
 import sys
-from py.chat import get_name_by_question, chat_stream, load_his, cache_persistent_fun, get_content_list_fun, chatgpt_fun
-from py.mysql_history import query_content_list, get_sessionId_by_msgId
-from py.redis_cache import exists_key, set_kv, get_v, update_v
-from py.util import get_session_id, tuple_to_list, list_to_dict
+from py.chat import chat_stream, load_his, cache_persistent_fun, get_content_list_fun, chatgpt_fun
+from py.util import get_session_id
 import traceback
 
-# sys.stderr = open("log.txt", "a")
+sys.stderr = open("log.txt", "a")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 
@@ -57,5 +55,5 @@ def cache_persistent(sessionId):
     return "cache"
 
 
-if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=5000, debug=True)
+# if __name__ == '__main__':
+#     app.run(host="127.0.0.1", port=5002, debug=True)

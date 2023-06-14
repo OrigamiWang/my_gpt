@@ -12,7 +12,7 @@
 4. mysql查询到的数据是tuple，redis不能用tuple、list，选用string，使用eval将string转化成list、tuple
 5. 重构前端
 6. 点击历史对话 -> 将mysql的数据缓存到redis。**最后同步缓存的时候，插入新增加的对话，并更新message的时间**
-
+7. 修改了read_yaml的路径，将`\\`改成了`/`,否则linux识别不了
 
 ## css属性积累
 
