@@ -84,7 +84,7 @@ def get_content_list_fun(msg_id):
     return session_id, content_list
 
 
-def chatgpt_fun(sessionId,question):
+def chatgpt_fun(sessionId, question):
     message_key = str(sessionId) + "_message"
     content_key = str(sessionId) + "_content"
     print(exists_key(content_key))

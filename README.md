@@ -2,7 +2,7 @@
 
 ## 架构设计图
 
-![架构设计图](static/my_gpt.jpg)
+![架构设计图](static/img/my_gpt.jpg)
 
 ## 日志
 

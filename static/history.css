@@ -44,3 +44,29 @@
 .mouse_enter_box {
     background-color: #f3f9f1;
 }
+
+.opt_div {
+    border-radius: 5px;
+    height: 60%;
+    width: 25%;
+    margin: 3%;
+}
+
+.opt_img {
+    width: 100%;
+    height: 100%;
+}
+
+.agate_gray {
+    background-color: #cfccc9;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.none {
+    display: none
+}

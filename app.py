@@ -2,10 +2,13 @@ from flask import Flask, render_template, request, make_response, jsonify, Respo
 import os
 import sys
 from py.chat import chat_stream, load_his, cache_persistent_fun, get_content_list_fun, chatgpt_fun
+from py.mysql_history import del_fun
 from py.util import get_session_id
 import traceback
 
 sys.stderr = open("log.txt", "a")
+sys.stdin = open("log.txt", "a")
+sys.stdout = open("log.txt", "a")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 
@@ -54,6 +57,24 @@ def cache_persistent(sessionId):
     cache_persistent_fun(sessionId)
     return "cache"
 
+
+@app.route('/del/<msg_id>', methods=["GET", "POST"])
+def del_by_msg_id(msg_id):
+    del_fun(msg_id)
+    print(msg_id)
+    return jsonify("del success!")
+
+
+@app.route('/mod/<msg_id>', methods=["GET", "POST"])
+def modify_by_msg_id(msg_id):
+    print(msg_id)
+    return jsonify("mod success!")
+
+
+@app.route('/more/<msg_id>', methods=["GET", "POST"])
+def more_by_msg_id(msg_id):
+    print(type(msg_id))
+    return jsonify("more success!")
 
 # if __name__ == '__main__':
 #     app.run(host="127.0.0.1", port=5002, debug=True)
