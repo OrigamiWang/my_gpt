@@ -63,15 +63,15 @@ def update_msg_name_by_id(msg_id, msg_name):
 
 def del_content_by_msg_id(msg_id):
     conn, cursor = connect_mysql()
-    sql = "DELETE FROM content c WHERE c.`session_id` = (SELECT m.`session_id` FROM message m WHERE m.`id` = " \
-          + msg_id + ")"
+    sql = "DELETE FROM content WHERE `session_id` = (SELECT `session_id` FROM message WHERE `id` = " + msg_id + ")"
+    print(sql)
     cursor.execute(sql)
     conn.commit()
 
 
 def del_message_by_msg_id(msg_id):
     conn, cursor = connect_mysql()
-    sql = "DELETE FROM message m WHERE m.`id` = " + msg_id
+    sql = "DELETE FROM message  WHERE `id` = " + msg_id
     cursor.execute(sql)
     conn.commit()
 
@@ -90,7 +90,7 @@ def query_history():
 
 
 def query_content_list(id):
-    sql = "SELECT * FROM content c WHERE c.`session_id` = (SELECT m.`session_id` FROM message m WHERE m.`id` = " + \
+    sql = "SELECT * FROM content WHERE `session_id` = (SELECT m.`session_id` FROM message m WHERE m.`id` = " + \
           str(id) + ")"
     return execute_sql(sql)
 

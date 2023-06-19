@@ -16,9 +16,13 @@
 8. 修复了数据库已知问题
 9. 优化了前端页面动态渲染和事件绑定的逻辑
 10. 添加删除聊天的功能
+11. 修复删除聊天功能的异常
 
 ## css属性积累
 
 1. `word-wrap: break-word`,很多字母连在一起会被浏览器误认为是一个单词，而不会换行，因此需要设置此属性
 2. `width: fit-content` 和 `maxWidth: 50%`实现div宽度的自适应
 3. `clear: both`实现让设置了`float`的div可以独占一行
+
+## mysql语法积累
+1. `delete from message m where m.id = 1`这句话是错的，在mysql delete中应该这样使用别名：`delete m from message m where m.id = 1`
