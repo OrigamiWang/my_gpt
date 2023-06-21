@@ -2,11 +2,14 @@ let chatText = document.getElementById('chatText')
 let submitBtn = document.getElementById('submitBtn')
 let chatInfo = document.getElementById('chatInfo')
 let session_id = null
+let body = document.body
 // 页面加载成功时，获取session_id并保存在js中作为一次会话
 window.onload = () => {
     console.log("the page is loaded...")
+
     fetch_session_id()
-    load_history()
+    enable_history()
+    // load_history()
 }
 // 页面关闭时触发，将redis缓存中的数据持久化到mysql
 window.onbeforeunload = () => {
@@ -54,22 +57,14 @@ function fetch_session_id() {
         });
 }
 
-function setDivStyle(style) {
-    style.backgroundColor = "#36292F"
-    style.color = "#F3F9F1"
-    style.width = "fit-content"
-    style.maxWidth = "38%"
-    style.padding = "1vw"
-    style.margin = "2vh 3vw"
-    style.borderRadius = "10px"
-    style.wordBreak = "break-word"
-}
 
-function addQuestionDiv(text) {
+function addQuestionDiv(text, conversation_idx) {
     let question_div = document.createElement('div')
     question_div.setAttribute('class', 'conversation right')
+    question_div.setAttribute('conversation_idx', conversation_idx)
     question_div.innerText = text
     chatInfo.appendChild(question_div)
+    return question_div
 }
 
 function addClearDiv() {
@@ -78,9 +73,10 @@ function addClearDiv() {
     chatInfo.appendChild(clear_div)
 }
 
-function addAnswerDiv() {
+function addAnswerDiv(conversation_idx) {
     let answer_div = document.createElement('div')
     answer_div.setAttribute('class', 'conversation')
+    answer_div.setAttribute('conversation_idx', conversation_idx)
     chatInfo.appendChild(answer_div)
     return answer_div
 }

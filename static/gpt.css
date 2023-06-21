@@ -75,4 +75,9 @@ body {
     margin: 2vh 3vw;
     border-radius: 10px;
     word-break: break-word;
+
+}
+
+.conversation_border {
+    background-color: #5d3f51
 }

@@ -1,7 +1,7 @@
-let history_container = document.getElementById('history')
 let history_arr
 
 function create_history_box(id, input_value, sidebar_datetime) {
+    let history_container = document.getElementById('history')
     // 1. create history box
     let history_box = document.createElement('div')
     history_box.setAttribute('id', "box" + id)
@@ -93,7 +93,6 @@ function get_msg_id_by_img_div(div) {
     return box_div.id.substring(3)
 
 }
-
 
 
 function fetch_del(div) {
@@ -188,15 +187,25 @@ function create_history_list() {
 
 function load_history_div(content_list) {
     console.log("history div loading...")
+    // conversation_idx用于记录当前div是对话的第几个，方便tts
+    let conversation_idx = 0
     content_list.forEach(content => {
         console.log(content)
         if (content[2] === 3) {
-            //  回答
-            let answer_div = addAnswerDiv()
+            //  创建div：回答
+            let answer_div = addAnswerDiv(conversation_idx++)
             appendAnswerText(answer_div, content[3])
+            // 绑定点击事件，用于tts
+            text_to_speach(answer_div)
+            // 绑定事件，修改样式
+            addConversationEvents(answer_div, 0)
         } else {
-            // 提问
-            addQuestionDiv(content[3])
+            // 创建div：提问
+            let question_div = addQuestionDiv(content[3], conversation_idx++)
+            // 绑定点击事件，用于tts
+            text_to_speach(question_div)
+            // 绑定事件，修改样式
+            addConversationEvents(question_div, 1)
         }
         addClearDiv()
     })
@@ -216,7 +225,7 @@ function fetch_content_by_msg_id(msg_id) {
 // 访问历史记录
 function access_history(box) {
     box.onclick = () => {
-        // 先删除div内原本的所有元素
+        // 先删除chatInfo聊天框内原有的所有聊天
         recursive_remove_div_by_id("chatInfo")
         console.log("click box...")
         // message位于数据库的索引
@@ -236,7 +245,16 @@ async function fetch_load_history() {
         })
 }
 
+function create_history_div() {
+    let container = document.getElementById('container')
+    let history_div = document.createElement('div')
+    history_div.setAttribute('id', 'history')
+    history_div.setAttribute('class', 'right')
+    container.appendChild(history_div)
+}
+
 async function load_history() {
+    create_history_div()
     await fetch_load_history()
     create_history_list()
 }

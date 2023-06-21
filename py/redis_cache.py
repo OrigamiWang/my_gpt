@@ -1,6 +1,5 @@
 import redis
 
-from py.mysql_history import get_content, query_history
 from py.util import read_yaml
 
 
@@ -41,7 +40,16 @@ def load_history_cache():
     return get_v("history")
 
 
+def get_content_by_conversationIdx_and_sessionId(conversation_id, session_id: str):
+    content_list = eval(get_v(session_id + "_content"))
+    return content_list[int(conversation_id)]['content']
+
+
 if __name__ == '__main__':
-    history_cache = get_v("history")
-    print(history_cache)
-    print(eval(history_cache))
+    # utf8_to_chinese()
+    # session_id, content的id
+    # tts (text to speach)
+    # /tts/content_idx/session_id
+    content_list = eval(get_v("16866578914675434_content"))
+    for content in content_list:
+        print(content['content'])

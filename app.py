@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request, make_response, jsonify, Response
 import os
-import sys
 from py.chat import chat_stream, load_his, cache_persistent_fun, get_content_list_fun, chatgpt_fun
 from py.mysql_history import del_fun
 from py.util import get_session_id
 import traceback
 
-sys.stderr = open("log.txt", "a")
-sys.stdin = open("log.txt", "a")
-sys.stdout = open("log.txt", "a")
+# sys.stderr = open("log.txt", "a")
+# sys.stdin = open("log.txt", "a")
+# sys.stdout = open("log.txt", "a")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 
@@ -75,6 +74,12 @@ def modify_by_msg_id(msg_id):
 def more_by_msg_id(msg_id):
     print(type(msg_id))
     return jsonify("more success!")
+
+
+@app.route('/tts/<conversation_idx>/<session_id>')
+def text_to_speach(conversation_idx, session_id):
+    # tts_by_pyttsx4(conversation_idx, session_id)
+    return jsonify("text to speach success!")
 
 # if __name__ == '__main__':
 #     app.run(host="127.0.0.1", port=5002, debug=True)
