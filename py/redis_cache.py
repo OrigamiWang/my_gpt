@@ -50,6 +50,7 @@ if __name__ == '__main__':
     # session_id, content的id
     # tts (text to speach)
     # /tts/content_idx/session_id
-    content_list = eval(get_v("16866578914675434_content"))
+    content_list = eval(get_v("16874174121857572_content"))
+    print(content_list)
     for content in content_list:
         print(content['content'])

@@ -58,11 +58,11 @@ function fetch_session_id() {
 }
 
 
-function addQuestionDiv(text, conversation_idx) {
+function addQuestionDiv(text) {
     let question_div = document.createElement('div')
     question_div.setAttribute('class', 'conversation right')
-    question_div.setAttribute('conversation_idx', conversation_idx)
-    question_div.innerText = text
+    // question_div.innerText = text
+    question_div.innerHTML = text
     chatInfo.appendChild(question_div)
     return question_div
 }
@@ -73,16 +73,16 @@ function addClearDiv() {
     chatInfo.appendChild(clear_div)
 }
 
-function addAnswerDiv(conversation_idx) {
+function addAnswerDiv() {
     let answer_div = document.createElement('div')
     answer_div.setAttribute('class', 'conversation')
-    answer_div.setAttribute('conversation_idx', conversation_idx)
     chatInfo.appendChild(answer_div)
     return answer_div
 }
 
 function appendAnswerText(answer_div, text) {
-    answer_div.innerHTML = answer_div.innerHTML + text
+    // innerText的回车是\n, innerHTML的回车是<br>
+    answer_div.innerText = answer_div.innerText + text
 }
 
 function submit() {
@@ -101,6 +101,8 @@ function submit() {
             recover_submit_style()
             source.close();
         } else {
+            console.log("----test---")
+            console.log(event.data)
             appendAnswerText(answerDiv, event.data)
             // chatInfo.innerText = chatInfo.innerText + event.data
         }

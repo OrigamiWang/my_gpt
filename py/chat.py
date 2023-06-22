@@ -16,10 +16,9 @@ def chat_stream(messages, sessionId):
     openai.api_key = read_yaml('gpt.key')
     openai.api_base = read_yaml('gpt.url')
     response = openai.ChatCompletion.create(
-        # model="gpt-4",
         model=read_yaml('gpt.model'),
         messages=messages,
-        temperature=0,
+        temperature=0.6,
         # max_tokens=1000,
         stream=True,
         # top_p=1,
@@ -108,6 +107,7 @@ def chatgpt_fun(sessionId, question):
     content_arr.append(content_dict)
     # 更新缓存
     update_v(content_key, str(content_arr))
+
     # 删除一些无关数据(sessionId)
     for content in content_arr:
         content.pop('sessionId')

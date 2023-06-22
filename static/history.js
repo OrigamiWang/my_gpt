@@ -187,13 +187,11 @@ function create_history_list() {
 
 function load_history_div(content_list) {
     console.log("history div loading...")
-    // conversation_idx用于记录当前div是对话的第几个，方便tts
-    let conversation_idx = 0
     content_list.forEach(content => {
         console.log(content)
         if (content[2] === 3) {
             //  创建div：回答
-            let answer_div = addAnswerDiv(conversation_idx++)
+            let answer_div = addAnswerDiv()
             appendAnswerText(answer_div, content[3])
             // 绑定点击事件，用于tts
             text_to_speach(answer_div)
@@ -201,7 +199,7 @@ function load_history_div(content_list) {
             addConversationEvents(answer_div, 0)
         } else {
             // 创建div：提问
-            let question_div = addQuestionDiv(content[3], conversation_idx++)
+            let question_div = addQuestionDiv(content[3])
             // 绑定点击事件，用于tts
             text_to_speach(question_div)
             // 绑定事件，修改样式
