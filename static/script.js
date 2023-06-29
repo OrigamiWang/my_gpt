@@ -82,7 +82,8 @@ function addAnswerDiv() {
 
 function appendAnswerText(answer_div, text) {
     // innerText的回车是\n, innerHTML的回车是<br>
-    answer_div.innerText = answer_div.innerText + text
+    // answer_div.innerText = answer_div.innerText + text
+    answer_div.innerHTML = answer_div.innerHTML + text
 }
 
 function submit() {

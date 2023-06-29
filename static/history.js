@@ -184,6 +184,11 @@ function create_history_list() {
     }
     add_events()
 }
+function loadAnswerText(answer_div, text) {
+    // innerText的回车是\n, innerHTML的回车是<br>
+    // answer_div.innerText = answer_div.innerText + text
+    answer_div.innerText = answer_div.innerText + text
+}
 
 function load_history_div(content_list) {
     console.log("history div loading...")
@@ -192,7 +197,7 @@ function load_history_div(content_list) {
         if (content[2] === 3) {
             //  创建div：回答
             let answer_div = addAnswerDiv()
-            appendAnswerText(answer_div, content[3])
+            loadAnswerText(answer_div, content[3])
             // 绑定点击事件，用于tts
             text_to_speach(answer_div)
             // 绑定事件，修改样式
